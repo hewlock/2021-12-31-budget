@@ -1,0 +1,49 @@
+{
+  "name": "budget",
+  "version": "0.1.0",
+  "author": "Matthew Moulton",
+  "description": "Zero-based budget app for personal finances",
+  "license": "GNU General Public License v3.0",
+  "main": "src/main.js",
+  "private": true,
+  "productName": "Budget",
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "concurrently": "^6.5.1",
+    "electron": "^16.0.5",
+    "electron-devtools-installer": "^3.2.0",
+    "electron-is-dev": "^2.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "5.0.0",
+    "wait-on": "^6.0.0"
+  },
+  "scripts": {
+    "build": "react-scripts build",
+    "start": "concurrently -k --success=first \"npm:server\" \"npm:electron\"",
+    "eject": "react-scripts eject",
+    "electron": "wait-on tcp:3000 && electron .",
+    "server": "BROWSER=none react-scripts start",
+    "test": "react-scripts test"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
