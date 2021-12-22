@@ -1,9 +1,8 @@
-import logo from './logo.svg';
+import logo from './assets/logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { IntlProvider, FormattedMessage } from 'react-intl';
-import en from './lang/en.json'
+import { FormattedMessage } from 'react-intl';
 
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -13,13 +12,11 @@ import {
     useMemo,
     useState,
 } from 'react';
-import configureStore from './configureStore';
 import {
     increment,
     getCount,
-} from './ducks/count';
+} from './state/count';
 import {
-    Provider,
     useDispatch,
     useSelector,
 } from 'react-redux';
@@ -65,52 +62,38 @@ function Counter() {
 }
 
 export default function App() {
-    const store = useMemo(() => configureStore({}), []);
-
     return (
-        <IntlProvider messages={en} locale="en" defaultLocale="en">
-            <Provider store={store}>
-                <div className="App">
-                    <header className="App-header">
-                        <img src={logo} className="App-logo" alt="logo" />
-                        <p>
-                            <FormattedMessage id="hello" />
-                        </p>
-                        <BrowserRouter>
-                            <Routes>
-                                <Route
-                                    path="/"
-                                    element={
-                                        <>
-                                            <h1>Main</h1>
-                                            <Counter />
-                                            <div>
-                                                <Link to="/">home</Link> | <Link to="/about">about</Link>
-                                            </div>
-                                            <Outlet />
-                                        </>
-                                    }
-                                >
-                                    <Route
-                                        path="/about"
-                                        element={
-                                            <h2>About</h2>
-                                        }
-                                    />
-                                </Route>
-                            </Routes>
-                        </BrowserRouter>
-                        <a
-                            className="App-link"
-                            href="https://reactjs.org"
-                            target="_blank"
-                            rel="noopener noreferrer"
+        <div className="App">
+            <header className="App-header">
+                <img src={logo} className="App-logo" alt="logo" />
+                <p>
+                    <FormattedMessage id="hello" />
+                </p>
+                <BrowserRouter>
+                    <Routes>
+                        <Route
+                            path="/"
+                            element={
+                                <>
+                                    <h1>Main</h1>
+                                    <Counter />
+                                    <div>
+                                        <Link to="/">home</Link> | <Link to="/about">about</Link>
+                                    </div>
+                                    <Outlet />
+                                </>
+                            }
                         >
-                            Learn React
-                        </a>
-                    </header>
-                </div>
-            </Provider>
-        </IntlProvider>
+                            <Route
+                                path="/about"
+                                element={
+                                    <h2>About</h2>
+                                }
+                            />
+                        </Route>
+                    </Routes>
+                </BrowserRouter>
+            </header>
+        </div>
     );
 }

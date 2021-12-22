@@ -4,7 +4,7 @@
   "author": "Matthew Moulton",
   "description": "Zero-based budget app for personal finances",
   "license": "GNU General Public License v3.0",
-  "main": "src/main.js",
+  "main": "src/electron.js",
   "private": true,
   "productName": "Budget",
   "dependencies": {
