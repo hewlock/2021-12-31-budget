@@ -1,3 +1,13 @@
 {
-    "hello": "Hello World"
+    "account.add": "Add Account",
+    "account.confirm-delete": "Are you sure you would like to delete account \"{name}\"?",
+    "account.delete": "Delete Account",
+    "account.edit": "Edit Account",
+    "account.include": "Include in Budget",
+    "account.off": "Off-Budget Accounts",
+    "account.on": "Budget Accounts",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "name": "Name",
+    "save": "Save"
 }

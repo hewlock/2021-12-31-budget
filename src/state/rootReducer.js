@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import count from './count';
+import accounts from './accounts';
 
 export default combineReducers({
-    count,
+    accounts,
 });
