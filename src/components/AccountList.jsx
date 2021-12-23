@@ -1,3 +1,4 @@
+import Accordion from 'react-bootstrap/Accordion';
 import Account from './Account';
 import { FormattedMessage } from 'react-intl';
 import { getAccounts } from '../state/accounts';
@@ -12,16 +13,20 @@ export default function AccountList({ budget }) {
     );
 
     return (
-        <div>
-            <h1>
-                <FormattedMessage id={`account.${budget ? 'on' : 'off'}`} />
-            </h1>
-            {accounts.map(account => (
-                <Account
-                    accountId={account.id}
-                    key={account.id}
-                />
-            ))}
-        </div>
+        <Accordion>
+            <Accordion.Item>
+                <Accordion.Header>
+                    <FormattedMessage id={`account.${budget ? 'on' : 'off'}`} />
+                </Accordion.Header>
+                <Accordion.Body>
+                    {accounts.map(account => (
+                        <Account
+                            accountId={account.id}
+                            key={account.id}
+                        />
+                    ))}
+                </Accordion.Body>
+            </Accordion.Item>
+        </Accordion>
     );
 }
