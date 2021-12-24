@@ -3,13 +3,21 @@ const initialState = {
     byOrder: [],
 };
 
+// Constants
+
+export const NEW_ACCOUNT = {
+    budget: true,
+    id: null,
+    name: '',
+}
+
+// Actions
+
 const ADD = 'accounts/ADD';
 const DELETE = 'accounts/DELETE';
 const EDIT = 'accounts/EDIT';
 
-/**
- * Action Creators
- */
+// Action Creators
 
 export function addAccount(account) {
     return {
@@ -17,7 +25,6 @@ export function addAccount(account) {
         payload: account,
     }
 }
-
 
 export function deleteAccount(account) {
     return {
@@ -33,9 +40,7 @@ export function editAccount(account) {
     }
 }
 
-/**
- * Selectors
- */
+// Selectors
 
 export function getAccounts(state) {
     return state.accounts.byOrder;
@@ -45,9 +50,7 @@ export function getAccountById(state, id) {
     return state.accounts.byId[id];
 }
 
-/**
- * Reducer
- */
+// Reducer
 
 function normalize(byId) {
     return {

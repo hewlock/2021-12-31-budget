@@ -1,16 +1,31 @@
 {
+    "app-name": "Budget",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "ok": "OK",
+    "save": "Save",
+
     "account.add": "Add Account",
     "account.confirm-delete": "Are you sure you would like to delete account \"{name}\"?",
     "account.delete": "Delete Account",
     "account.edit": "Edit Account",
     "account.include": "Include in Budget",
+    "account.name": "Name",
     "account.off": "Off-Budget Accounts",
     "account.on": "Budget Accounts",
-    "budget": "Budget",
-    "cancel": "Cancel",
-    "delete": "Delete",
-    "name": "Name",
-    "reports": "Reports",
-    "save": "Save",
-    "transactions": "All Transactions"
+
+    "navigation.budget": "Budget",
+    "navigation.reports": "Reports",
+    "navigation.transactions": "All Transactions",
+
+    "new.auto-loan": "Auto Loan",
+    "new.brokerage": "Brokerage",
+    "new.cash": "Cash",
+    "new.checking": "Checking",
+    "new.credit-card": "Credit Card",
+    "new.home-loan": "Home Loan",
+    "new.savings": "Savings",
+
+    "welcome.lead": "Zero-based budget app for personal finances",
+    "welcome.new": "New Budget"
 }

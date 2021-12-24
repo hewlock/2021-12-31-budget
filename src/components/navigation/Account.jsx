@@ -1,8 +1,8 @@
-import Button from 'react-bootstrap/Button';
+import ConfirmModal from '../ConfirmModal';
+import Currency from '../Currency';
 import ContextMenu from '../ContextMenu';
 import Dropdown from 'react-bootstrap/Dropdown';
 import EditAccountModal from './EditAccountModal.jsx';
-import Modal from 'react-bootstrap/Modal';
 import useBooleanState from '../../hooks/useBooleanState';
 import { FormattedMessage } from 'react-intl';
 import { deleteAccount, editAccount, getAccountById } from '../../state/accounts';
@@ -51,24 +51,16 @@ function DeleteItem({ accountId }) {
 
     return (
         <>
-            <Modal show={show} onHide={setShowFalse}>
-                <Modal.Header closeButton={true}>
-                    <Modal.Title>
-                        <FormattedMessage id="account.delete" />
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <FormattedMessage id="account.confirm-delete" values={account} />
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={setShowFalse}>
-                        <FormattedMessage id="cancel" />
-                    </Button>
-                    <Button variant="danger" onClick={handleDelete}>
-                        <FormattedMessage id="delete" />
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+            <ConfirmModal
+                confirmKey="delete"
+                confirmVariant="danger"
+                messageKey="account.confirm-delete"
+                messageValues={account}
+                onCancel={setShowFalse}
+                onConfirm={handleDelete}
+                show={show}
+                titleKey="account.delete"
+            />
             <Dropdown.Item onClick={setShowTrue}>
                 <FormattedMessage id="account.delete" />
             </Dropdown.Item>
@@ -94,7 +86,7 @@ export default function Account({ accountId }) {
                         {account.name}
                     </span>
                     <span className="btn-account__amount">
-                        $123.45
+                        <Currency value={12345678} />
                     </span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>

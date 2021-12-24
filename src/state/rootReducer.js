@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 
 import accounts from './accounts';
+import currency from './currency';
 
 const appReducer = combineReducers({
     accounts,
+    currency,
 });
 
 const RESET = 'root/RESET';

@@ -41,7 +41,7 @@ export default function EditAccountModal({
                 <Form onSubmit={handleSave}>
                     <Form.Group className="mb-3" controlId="editAccountModalName">
                         <Form.Label>
-                            <FormattedMessage id="name" />
+                            <FormattedMessage id="account.name" />
                         </Form.Label>
                         <Form.Control
                             onChange={handleNameChange}

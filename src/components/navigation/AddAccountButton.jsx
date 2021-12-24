@@ -3,14 +3,9 @@ import EditAccountModal from './EditAccountModal.jsx';
 import useBooleanState from '../../hooks/useBooleanState';
 import uuid from '../../util/uuid';
 import { FormattedMessage } from 'react-intl';
-import { addAccount } from '../../state/accounts';
-import { useDispatch } from 'react-redux';
+import { NEW_ACCOUNT, addAccount } from '../../state/accounts';
 import { useCallback, useState } from 'react';
-
-const NEW_ACCOUNT = {
-    budget: true,
-    name: '',
-}
+import { useDispatch } from 'react-redux';
 
 export default function AddAccountButton() {
     const [show, setShowTrue, setShowFalse] = useBooleanState(false);

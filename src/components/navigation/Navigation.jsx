@@ -12,7 +12,7 @@ export default function Nav() {
                     className="text-body text-decoration-none"
                     to="/"
                 >
-                    <FormattedMessage id="budget" />
+                    <FormattedMessage id="app-name" />
                 </Link>
             </h1>
             <div className="list-group ">
@@ -20,19 +20,19 @@ export default function Nav() {
                     className="list-group-item list-group-item-action"
                     to="/app/budget"
                 >
-                    <FormattedMessage id="budget" />
+                    <FormattedMessage id="navigation.budget" />
                 </Link>
                 <Link
                     className="list-group-item list-group-item-action"
                     to="/app/report"
                 >
-                    <FormattedMessage id="reports" />
+                    <FormattedMessage id="navigation.reports" />
                 </Link>
                 <Link
                     className="list-group-item list-group-item-action"
                     to="/app/transaction"
                 >
-                    <FormattedMessage id="transactions" />
+                    <FormattedMessage id="navigation.transactions" />
                 </Link>
             </div>
             <AccountList budget={true} />
