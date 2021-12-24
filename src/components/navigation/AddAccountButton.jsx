@@ -1,9 +1,9 @@
 import Button from 'react-bootstrap/Button';
 import EditAccountModal from './EditAccountModal.jsx';
-import useBooleanState from '../hooks/useBooleanState';
-import uuid from '../util/uuid';
+import useBooleanState from '../../hooks/useBooleanState';
+import uuid from '../../util/uuid';
 import { FormattedMessage } from 'react-intl';
-import { addAccount } from '../state/accounts';
+import { addAccount } from '../../state/accounts';
 import { useDispatch } from 'react-redux';
 import { useCallback, useState } from 'react';
 

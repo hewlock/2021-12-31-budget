@@ -1,13 +1,14 @@
 import Button from 'react-bootstrap/Button';
-import ContextMenu from './ContextMenu';
+import ContextMenu from '../ContextMenu';
 import Dropdown from 'react-bootstrap/Dropdown';
 import EditAccountModal from './EditAccountModal.jsx';
 import Modal from 'react-bootstrap/Modal';
-import useBooleanState from '../hooks/useBooleanState';
+import useBooleanState from '../../hooks/useBooleanState';
 import { FormattedMessage } from 'react-intl';
-import { deleteAccount, editAccount, getAccountById } from '../state/accounts';
+import { deleteAccount, editAccount, getAccountById } from '../../state/accounts';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function EditItem({ accountId }) {
     const account = useSelector(state => getAccountById(state, accountId));
@@ -75,8 +76,10 @@ function DeleteItem({ accountId }) {
     );
 }
 
-export default function EditAccountButton({ accountId }) {
+export default function Account({ accountId }) {
     const account = useSelector(state => getAccountById(state, accountId));
+    const navigate = useNavigate();
+    const handleClick = useCallback(() => navigate("/app/transaction"), [navigate]);
 
     return (
         <>
@@ -84,10 +87,15 @@ export default function EditAccountButton({ accountId }) {
                 <Dropdown.Toggle
                     as={ContextMenu}
                     id={`edit-${accountId}`}
-                    onLeftClick={() => alert('left click')}
-                    variant="outline-primary"
+                    onLeftClick={handleClick}
+                    variant="account"
                 >
-                    {account.name}
+                    <span className="btn-account__name">
+                        {account.name}
+                    </span>
+                    <span className="btn-account__amount">
+                        $123.45
+                    </span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     <EditItem accountId={accountId} />

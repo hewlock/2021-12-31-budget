@@ -10,5 +10,7 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "name": "Name",
-    "save": "Save"
+    "reports": "Reports",
+    "save": "Save",
+    "transactions": "All Transactions"
 }

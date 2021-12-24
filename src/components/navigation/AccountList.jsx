@@ -1,7 +1,7 @@
 import Accordion from 'react-bootstrap/Accordion';
 import Account from './Account';
 import { FormattedMessage } from 'react-intl';
-import { getAccounts } from '../state/accounts';
+import { getAccounts } from '../../state/accounts';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
