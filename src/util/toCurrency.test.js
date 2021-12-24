@@ -8,6 +8,14 @@ const USD = {
     groupSymbol: ',',
 }
 
+const FICTIONAL = {
+    currencySymbol: 'FICTION',
+    decimalSize: 4,
+    decimalSymbol: '*',
+    groupSize: 2,
+    groupSymbol: '^^',
+}
+
 test('renders 0 USD', () => {
     expect(toCurrency(0, USD)).toEqual('0.00');
 });
@@ -70,4 +78,8 @@ test('renders 9,876,543.21 USD', () => {
 
 test('renders 3,219,876,543.21 USD', () => {
     expect(toCurrency(321987654321, USD)).toEqual('3,219,876,543.21');
+});
+
+test('renders 32^^19^^87^^65*4321 FICTIONAL', () => {
+    expect(toCurrency(321987654321, FICTIONAL)).toEqual('32^^19^^87^^65*4321');
 });

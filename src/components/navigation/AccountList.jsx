@@ -1,5 +1,6 @@
 import Accordion from 'react-bootstrap/Accordion';
 import Account from './Account';
+import Currency from '../Currency'
 import { FormattedMessage } from 'react-intl';
 import { getAccounts } from '../../state/accounts';
 import { useMemo } from 'react';
@@ -16,7 +17,12 @@ export default function AccountList({ budget }) {
         <Accordion>
             <Accordion.Item>
                 <Accordion.Header>
-                    <FormattedMessage id={`account.${budget ? 'on' : 'off'}`} />
+                    <span className="btn-account__name">
+                        <FormattedMessage id={`account.${budget ? 'on' : 'off'}`} />
+                    </span>
+                    <span className="btn-account__amount">
+                        <Currency value={-12345678} symbol={true} />
+                    </span>
                 </Accordion.Header>
                 <Accordion.Body>
                     {accounts.map(account => (
