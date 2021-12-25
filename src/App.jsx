@@ -1,7 +1,9 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import Budget from './components/budget/Budget.jsx';
 import Navigation from './components/navigation/Navigation';
+import Transaction from './components/transaction/Transaction.jsx';
 import Welcome from './components/welcome/Welcome';
 
 import {
@@ -33,9 +35,9 @@ export default function App() {
                             </main>
                         </div>
                     }>
-                    <Route path="budget" element={<h1>Budget</h1>} />
-                    <Route path="transaction" element={<h1>Transactions</h1>} />
+                    <Route path="budget" element={<Budget />} />
                     <Route path="report" element={<h1>Reports</h1>} />
+                    <Route path="transaction" element={<Transaction />} />
                 </Route>
             </Routes>
         </BrowserRouter>

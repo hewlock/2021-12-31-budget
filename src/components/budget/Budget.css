@@ -1,0 +1,16 @@
+.Budget {
+    width: 100%;
+}
+
+.Budget td {
+    border: .25rem solid white;
+    padding: .25rem 1rem;
+}
+
+.Budget tr:nth-child(odd) td {
+    background-color: #fafffa;
+}
+
+.Budget tr:nth-child(even) td {
+    background-color: #f3f9f3;
+}
