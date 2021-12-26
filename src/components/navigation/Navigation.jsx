@@ -1,10 +1,18 @@
 import './Navigation.css';
 import AccountList from './AccountList';
 import AddAccountButton from './AddAccountButton';
+import Currency from '../Currency.jsx';
 import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { getTransactions } from '../../state/transactions';
+import { useMemo } from 'react';
+import { useSelector } from 'react-redux';
+
 
 export default function Nav() {
+    const transactions = useSelector(getTransactions);
+    const amount = useMemo(() => transactions.reduce((acc, trans) => acc + trans.amount, 0), [transactions]);
+
     return (
         <nav className="Navigation flex-shrink-0 p-3 bg-white">
             <h1 className="fs-5 fw-bold">
@@ -15,7 +23,7 @@ export default function Nav() {
                     <FormattedMessage id="app-name" />
                 </Link>
             </h1>
-            <div className="list-group ">
+            <div className="list-group">
                 <Link
                     className="list-group-item list-group-item-action"
                     to="/app/budget"
@@ -29,10 +37,13 @@ export default function Nav() {
                     <FormattedMessage id="navigation.reports" />
                 </Link>
                 <Link
-                    className="list-group-item list-group-item-action"
+                    className="d-flex list-group-item list-group-item-action"
                     to="/app/transaction"
                 >
-                    <FormattedMessage id="navigation.transactions" />
+                    <span className="flex-grow-1">
+                        <FormattedMessage id="navigation.transactions" />
+                    </span>
+                    <Currency value={amount} symbol={true} />
                 </Link>
             </div>
             <AccountList budget={true} />

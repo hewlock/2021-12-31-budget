@@ -7,10 +7,16 @@ import useBooleanState from '../../hooks/useBooleanState';
 import { FormattedMessage } from 'react-intl';
 import { editAccount, getAccountById, removeAccount } from '../../state/accounts';
 import { getCategoriesByType } from '../../state/categories';
-import { editTransaction, findTransactions, removeTransactionWhere } from '../../state/transactions';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
+import {
+    editTransaction,
+    findTransactions,
+    getTransactionsByAccountId,
+    removeTransactionWhere
+} from '../../state/transactions';
 
 function toForm(account, transaction) {
     return {
@@ -105,8 +111,10 @@ function DeleteItem({ accountId }) {
 
 export default function Account({ accountId }) {
     const account = useSelector(state => getAccountById(state, accountId));
+    const transactions = useSelector(state => getTransactionsByAccountId(state, accountId));
     const navigate = useNavigate();
     const handleClick = useCallback(() => navigate("/app/transaction"), [navigate]);
+    const amount = useMemo(() => transactions.reduce((acc, trans) => acc + trans.amount, 0), [transactions]);
 
     return (
         <>
@@ -121,7 +129,7 @@ export default function Account({ accountId }) {
                         {account.name}
                     </span>
                     <span className="btn-account__amount">
-                        <Currency value={12345678} />
+                        <Currency value={amount} />
                     </span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>

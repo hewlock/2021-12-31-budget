@@ -1,5 +1,5 @@
 .Navigation {
-    width: 280px;
+    width: 22rem;
 }
 
 .Navigation h1 {
@@ -9,6 +9,10 @@
 
 .Navigation .accordion {
     margin: 1rem 0;
+}
+
+.Navigation .accordion-header {
+    margin-right: 1rem;
 }
 
 .Navigation .accordion-item {
@@ -46,7 +50,7 @@
 
 .Navigation .btn-account {
     display: flex;
-    padding: 0.375rem 0 0.375rem 1.25rem;
+    padding: 0.375rem 1rem 0.375rem 1.25rem;
     text-align: left;
     width: 100%;
 }

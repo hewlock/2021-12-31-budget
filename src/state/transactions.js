@@ -16,7 +16,9 @@ export const NEW_TRANSACTION = {
     id: null,
 }
 
-const INDICES = {}
+const INDICES = {
+    byAccountId: 'accountId'
+}
 
 function comparator(a, b) {
     return a.date.localeCompare(b.date);
@@ -59,6 +61,10 @@ export function getTransactions(state) {
 
 export function getTransactionById(state, id) {
     return state.transactions.byId[id];
+}
+
+export function getTransactionsByAccountId(state, accountId) {
+    return state.transactions.byAccountId[accountId];
 }
 
 export function findTransactions(state, criteria) {
