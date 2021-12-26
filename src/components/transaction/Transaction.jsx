@@ -16,7 +16,7 @@ function Row({ transactionId }) {
             <td>{transaction.id}</td>
             <td>{account.name}</td>
             <td>{category.group} : {category.name}</td>
-            <td><Currency value={transaction.amount}/></td>
+            <td className="text-end"><Currency value={transaction.amount}/></td>
             <td>{transaction.date}</td>
         </tr>
     );

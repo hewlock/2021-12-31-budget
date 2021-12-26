@@ -2,11 +2,12 @@ import uuid from '../../util/uuid';
 import { addAccount } from '../../state/accounts';
 import { addCategory } from '../../state/categories';
 import { addTransaction } from '../../state/transactions';
+import { today } from '../../util/date';
 
 export default function createNewBudget(dispatch, intl) {
     function transaction(accountId, categoryId) {
         const id = uuid();
-        const date = new Date().toISOString().substring(0, 10);
+        const date = today();
         dispatch(addTransaction({
             accountId,
             amount: 0,
@@ -28,7 +29,7 @@ export default function createNewBudget(dispatch, intl) {
         return id;
     }
 
-    function category(groupKey, nameKey) {
+    function category(groupKey, nameKey, type = 'user') {
         const id = uuid();
         const group = intl.formatMessage({ id: groupKey });
         const name = intl.formatMessage({ id: nameKey });
@@ -36,11 +37,12 @@ export default function createNewBudget(dispatch, intl) {
             group,
             id,
             name,
+            type,
         }));
         return id;
     }
 
-    const systemId = category('new.group.system', 'new.category.initial-balance');
+    const systemId = category('new.group.system', 'new.category.initial-balance', 'initial-balance');
 
     category('new.group.food', 'new.category.eating-out');
     category('new.group.food', 'new.category.groceries');

@@ -1,3 +1,5 @@
+import findWhere from './findWhere';
+
 export function add(byId, item) {
     return { ...byId, [item.id]: item };
 }
@@ -13,14 +15,10 @@ export function remove(byId, item) {
 }
 
 export function removeWhere(byId, criteria) {
-    const keys = Object.keys(criteria);
-    return Object.values(byId).reduce((acc, item) => {
-        const match = keys.reduce((acc, key) => acc && item[key] === criteria[key], true)
-        if (!match) {
-            acc[item.id] = item;
-        }
-        return acc;
-    }, {});
+    const result = {...byId};
+    const items = findWhere(Object.values(byId), criteria);
+    items.forEach(item => delete result[item.id]);
+    return result;
 }
 
 export default function normalize(byId, comparator, indices = {}) {

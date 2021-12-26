@@ -1,34 +1,37 @@
 import Button from 'react-bootstrap/Button';
+import CurrencyControl from '../CurrencyControl';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 
 export default function EditAccountModal({
-    account,
+    form,
     onCancel,
+    onChange,
     onSave,
     show,
     title,
 }) {
     const intl = useIntl();
-    const [form, setForm] = useState(account);
-
-    useEffect(() => setForm(account), [account]);
 
     const handleNameChange = useCallback((e) =>
-        setForm(Object.assign({}, form, { name: e.target.value })),
-        [form, setForm]
+        onChange(Object.assign({}, form, { name: e.target.value })),
+        [form, onChange]
+    );
+    const handleBalanceChange = useCallback((balance) =>
+        onChange(Object.assign({}, form, { balance })),
+        [form, onChange]
     );
     const handleBudgetChange = useCallback((e) =>
-        setForm(Object.assign({}, form, { budget: e.target.checked })),
-        [form, setForm]
+        onChange(Object.assign({}, form, { budget: e.target.checked })),
+        [form, onChange]
     );
 
     const handleSave = useCallback((e) => {
         e.preventDefault();
-        onSave(form);
-    }, [form, onSave]);
+        onSave();
+    }, [onSave]);
 
     return (
         <Modal show={show} onHide={onCancel}>
@@ -47,6 +50,15 @@ export default function EditAccountModal({
                             onChange={handleNameChange}
                             type="text"
                             value={form.name}
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="editAccountModalBalance">
+                        <Form.Label>
+                            <FormattedMessage id="account.balance" />
+                        </Form.Label>
+                        <CurrencyControl
+                            onChange={handleBalanceChange}
+                            value={form.balance}
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="editAccountModalBudget">

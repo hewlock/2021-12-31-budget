@@ -6,6 +6,7 @@
     "save": "Save",
 
     "account.add": "Add Account",
+    "account.balance": "Initial Balance",
     "account.confirm-delete": "Are you sure you would like to delete account \"{name}\"?",
     "account.confirm-delete-details": "This will delete the account and all of its transactions.",
     "account.delete": "Delete Account",

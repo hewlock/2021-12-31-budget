@@ -17,6 +17,7 @@ export default function Budget() {
                             <td>{category.id}</td>
                             <td>{category.group}</td>
                             <td>{category.name}</td>
+                            <td>{category.type}</td>
                         </tr>
                     ))}
                 </tbody>

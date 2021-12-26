@@ -6,29 +6,62 @@ import EditAccountModal from './EditAccountModal.jsx';
 import useBooleanState from '../../hooks/useBooleanState';
 import { FormattedMessage } from 'react-intl';
 import { editAccount, getAccountById, removeAccount } from '../../state/accounts';
-import { removeTransactionWhere } from '../../state/transactions';
-import { useCallback } from 'react';
+import { getCategoriesByType } from '../../state/categories';
+import { editTransaction, findTransactions, removeTransactionWhere } from '../../state/transactions';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+function toForm(account, transaction) {
+    return {
+        balance: transaction.amount,
+        budget: account.budget,
+        id: account.id,
+        name: account.name,
+    };
+}
+
 function EditItem({ accountId }) {
-    const account = useSelector(state => getAccountById(state, accountId));
     const dispatch = useDispatch();
+    const account = useSelector(state => getAccountById(state, accountId));
+    const category = useSelector(state => getCategoriesByType(state, 'initial-balance')[0]);
+    const transaction = useSelector(state => findTransactions(state, { categoryId: category.id, accountId: account.id})[0]);
 
     const [show, setShowTrue, setShowFalse] = useBooleanState(false);
-    const handleCancel = useCallback(() => {
+    const [form, setForm] = useState(toForm(account, transaction));
+
+    useEffect(() => {
+        if (show) {
+            setForm(toForm(account, transaction));
+        }
+    }, [account, transaction, setForm, show]);
+
+    const handleSave = useCallback(() => {
+        const _account = Object.assign({}, account, {
+            budget: form.budget,
+            name: form.name,
+        });
+        const _transaction = Object.assign({}, transaction, {
+            amount: form.balance
+        });
+        dispatch(editAccount(_account));
+        dispatch(editTransaction(_transaction));
         setShowFalse();
-    }, [setShowFalse]);
-    const handleSave = useCallback((account) => {
-        dispatch(editAccount(account));
-        setShowFalse();
-    }, [dispatch, setShowFalse]);
+    }, [
+        account,
+        dispatch,
+        form,
+        setForm,
+        setShowFalse,
+        transaction,
+    ]);
 
     return (
         <>
             <EditAccountModal
-                account={account}
-                onCancel={handleCancel}
+                form={form}
+                onCancel={setShowFalse}
+                onChange={setForm}
                 onSave={handleSave}
                 show={show}
                 title="account.edit"
