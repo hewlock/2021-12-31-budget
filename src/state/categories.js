@@ -1,14 +1,23 @@
-const initialState = {
+import normalize, { add } from '../util/reducer.js'
+
+// Constants
+
+const INTIAL_STATE = {
     byId: {},
     byOrder: [],
 };
-
-// Constants
 
 export const NEW_CATEGORY = {
     group: '',
     id: null,
     name: '',
+}
+
+const INDICES = {}
+
+function comparator(a, b) {
+    const group = a.group.localeCompare(b.group);
+    return (0 !== group) ? group : a.name.localeCompare(b.name)
 }
 
 // Actions
@@ -36,23 +45,10 @@ export function getCategoryById(state, id) {
 
 // Reducer
 
-function normalize(byId) {
-    return {
-        byId,
-        byOrder: Object.values(byId).sort((a, b) => {
-            const c = a.group.localeCompare(b.group);
-            return (0 !== c) ? c : a.name.localeCompare(b.name)
-        }),
-    }
-}
-
-export default function reducer(state = initialState, action) {
+export default function reducer(state = INTIAL_STATE, action) {
     switch (action.type) {
     case ADD:
-        return normalize({
-            ...state.byId,
-            [action.payload.id]: action.payload
-        });
+        return normalize(add(state.byId, action.payload), comparator, INDICES);
     default:
         return state;
     }

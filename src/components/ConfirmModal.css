@@ -1,0 +1,4 @@
+.ConfirmModal .modal-footer,
+.ConfirmModal .modal-header {
+    border: none;
+}

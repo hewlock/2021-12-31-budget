@@ -1,9 +1,11 @@
-const initialState = {
+import normalize, { add, removeWhere } from '../util/reducer.js'
+
+// Constants
+
+const INITIAL_STATE = {
     byId: {},
     byOrder: [],
 };
-
-// Constants
 
 export const NEW_TRANSACTION = {
     accountId: '',
@@ -13,9 +15,16 @@ export const NEW_TRANSACTION = {
     id: null,
 }
 
+const INDICES = {}
+
+function comparator(a, b) {
+    return a.date.localeCompare(b.date);
+}
+
 // Actions
 
 const ADD = 'transactions/ADD';
+const REMOVE_WHERE = 'accounts/REMOVE_WHERE';
 
 // Action Creators
 
@@ -23,6 +32,13 @@ export function addTransaction(transaction) {
     return {
         type: ADD,
         payload: transaction,
+    }
+}
+
+export function removeTransactionWhere(criteria) {
+    return {
+        type: REMOVE_WHERE,
+        payload: criteria,
     }
 }
 
@@ -38,22 +54,12 @@ export function getTransactionById(state, id) {
 
 // Reducer
 
-function normalize(byId) {
-    return {
-        byId,
-        byOrder: Object.values(byId).sort((a, b) => {
-            return a.date.localeCompare(b.date)
-        }),
-    }
-}
-
-export default function reducer(state = initialState, action) {
+export default function reducer(state = INITIAL_STATE, action) {
     switch (action.type) {
     case ADD:
-        return normalize({
-            ...state.byId,
-            [action.payload.id]: action.payload
-        });
+        return normalize(add(state.byId, action.payload), comparator, INDICES);
+    case REMOVE_WHERE:
+        return normalize(removeWhere(state.byId, action.payload), comparator, INDICES);
     default:
         return state;
     }

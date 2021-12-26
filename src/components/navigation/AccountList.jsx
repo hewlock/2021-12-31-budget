@@ -2,16 +2,11 @@ import Accordion from 'react-bootstrap/Accordion';
 import Account from './Account';
 import Currency from '../Currency'
 import { FormattedMessage } from 'react-intl';
-import { getAccounts } from '../../state/accounts';
-import { useMemo } from 'react';
+import { getAccountsByBudget } from '../../state/accounts';
 import { useSelector } from 'react-redux';
 
 export default function AccountList({ budget }) {
-    const allAccounts = useSelector(getAccounts);
-    const accounts = useMemo(() =>
-        allAccounts.filter(account => account.budget === budget),
-        [allAccounts, budget]
-    );
+    const accounts = useSelector(state => getAccountsByBudget(state, budget));
 
     return (
         <Accordion>

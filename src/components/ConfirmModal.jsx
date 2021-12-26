@@ -1,3 +1,4 @@
+import './ConfirmModal.css';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FormattedMessage } from 'react-intl';
@@ -7,6 +8,8 @@ export default function ConfirmModal({
     cancelVariant = 'secondary',
     confirmKey = 'ok',
     confirmVariant = 'primary',
+    detailsKey,
+    detailsValues = {},
     messageKey,
     messageValues = {},
     onCancel,
@@ -15,14 +18,25 @@ export default function ConfirmModal({
     titleKey,
 }) {
     return (
-        <Modal show={show} onHide={onCancel}>
+        <Modal
+            dialogClassName="ConfirmModal"
+            onHide={onCancel}
+            show={show}
+        >
             <Modal.Header closeButton={true}>
                 <Modal.Title>
                     <FormattedMessage id={titleKey} />
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <FormattedMessage id={messageKey} values={messageValues} />
+                <p className="mb-0">
+                    <FormattedMessage id={messageKey} values={messageValues} />
+                </p>
+                {detailsKey &&
+                    <p className="mb-0 mt-3">
+                        <FormattedMessage id={detailsKey} values={detailsValues} />
+                    </p>
+                }
             </Modal.Body>
             <Modal.Footer>
                 <Button variant={cancelVariant} onClick={onCancel}>

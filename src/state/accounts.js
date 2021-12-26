@@ -1,9 +1,12 @@
-const initialState = {
+import normalize, { add, edit, remove } from '../util/reducer.js'
+
+// Constants
+
+const INITIAL_STATE = {
+    byBudget: {},
     byId: {},
     byOrder: [],
 };
-
-// Constants
 
 export const NEW_ACCOUNT = {
     budget: true,
@@ -11,11 +14,19 @@ export const NEW_ACCOUNT = {
     name: '',
 }
 
+const INDICES = {
+    byBudget: 'budget'
+}
+
+function comparator(a, b) {
+    return a.name.localeCompare(b.name);
+}
+
 // Actions
 
 const ADD = 'accounts/ADD';
-const DELETE = 'accounts/DELETE';
 const EDIT = 'accounts/EDIT';
+const REMOVE = 'accounts/REMOVE';
 
 // Action Creators
 
@@ -26,16 +37,16 @@ export function addAccount(account) {
     }
 }
 
-export function deleteAccount(account) {
+export function editAccount(account) {
     return {
-        type: DELETE,
+        type: EDIT,
         payload: account,
     }
 }
 
-export function editAccount(account) {
+export function removeAccount(account) {
     return {
-        type: EDIT,
+        type: REMOVE,
         payload: account,
     }
 }
@@ -50,34 +61,20 @@ export function getAccountById(state, id) {
     return state.accounts.byId[id];
 }
 
-// Reducer
-
-function normalize(byId) {
-    return {
-        byId,
-        byOrder: Object.values(byId).sort((a, b) => a.name.localeCompare(b.name)),
-    }
+export function getAccountsByBudget(state, budget) {
+    return state.accounts.byBudget[budget] || [];
 }
 
-export default function reducer(state = initialState, action) {
+// Reducer
+
+export default function reducer(state = INITIAL_STATE, action) {
     switch (action.type) {
     case ADD:
-        return normalize({
-            ...state.byId,
-            [action.payload.id]: action.payload
-        });
-    case DELETE:
-        return normalize(state.byOrder.reduce((acc, account) => {
-            if (account.id !== action.payload.id) {
-                acc[account.id] = account;
-            }
-            return acc;
-        }, {}));
+        return normalize(add(state.byId, action.payload), comparator, INDICES);
     case EDIT:
-        return normalize({
-            ...state.byId,
-            [action.payload.id]: action.payload
-        });
+        return normalize(edit(state.byId, action.payload), comparator, INDICES);
+    case REMOVE:
+        return normalize(remove(state.byId, action.payload), comparator, INDICES);
     default:
         return state;
     }

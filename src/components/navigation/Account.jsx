@@ -1,11 +1,12 @@
 import ConfirmModal from '../ConfirmModal';
-import Currency from '../Currency';
 import ContextMenu from '../ContextMenu';
+import Currency from '../Currency';
 import Dropdown from 'react-bootstrap/Dropdown';
 import EditAccountModal from './EditAccountModal.jsx';
 import useBooleanState from '../../hooks/useBooleanState';
 import { FormattedMessage } from 'react-intl';
-import { deleteAccount, editAccount, getAccountById } from '../../state/accounts';
+import { editAccount, getAccountById, removeAccount } from '../../state/accounts';
+import { removeTransactionWhere } from '../../state/transactions';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -45,7 +46,8 @@ function DeleteItem({ accountId }) {
 
     const [show, setShowTrue, setShowFalse] = useBooleanState(false);
     const handleDelete = useCallback(() => {
-        dispatch(deleteAccount(account));
+        dispatch(removeTransactionWhere({ accountId: account.id }));
+        dispatch(removeAccount(account));
         setShowFalse();
     }, [dispatch, setShowFalse, account]);
 
@@ -54,6 +56,7 @@ function DeleteItem({ accountId }) {
             <ConfirmModal
                 confirmKey="delete"
                 confirmVariant="danger"
+                detailsKey="account.confirm-delete-details"
                 messageKey="account.confirm-delete"
                 messageValues={account}
                 onCancel={setShowFalse}

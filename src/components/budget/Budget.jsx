@@ -11,13 +11,15 @@ export default function Budget() {
                 <FormattedMessage id="budget.title" />
             </h1>
             <table>
-                {categories.map((category) => (
-                    <tr key={category.id}>
-                        <td>{category.id}</td>
-                        <td>{category.group}</td>
-                        <td>{category.name}</td>
-                    </tr>
-                ))}
+                <tbody>
+                    {categories.map((category) => (
+                        <tr key={category.id}>
+                            <td>{category.id}</td>
+                            <td>{category.group}</td>
+                            <td>{category.name}</td>
+                        </tr>
+                    ))}
+                </tbody>
             </table>
         </div>
     );

@@ -30,12 +30,14 @@ export default function Transaction() {
                 <FormattedMessage id="transaction.title" />
             </h1>
             <table>
-                {transactions.map((transaction) => (
-                    <Row
-                        key={transaction.id}
-                        transactionId={transaction.id}
-                    />
-                ))}
+                <tbody>
+                    {transactions.map((transaction) => (
+                        <Row
+                            key={transaction.id}
+                            transactionId={transaction.id}
+                        />
+                    ))}
+                </tbody>
             </table>
         </div>
     );
