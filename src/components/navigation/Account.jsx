@@ -51,7 +51,6 @@ function EditItem({ accountId }) {
         account,
         dispatch,
         form,
-        setForm,
         setShowFalse,
         transaction,
     ]);
