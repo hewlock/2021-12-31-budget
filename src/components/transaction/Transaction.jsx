@@ -3,7 +3,9 @@ import Currency from '../Currency.jsx';
 import { FormattedMessage } from 'react-intl';
 import { getAccountById } from '../../state/accounts';
 import { getCategoryById } from '../../state/categories';
+import { getFilters } from '../../state/filters';
 import { getTransactions, getTransactionById } from '../../state/transactions';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 function Row({ transactionId }) {
@@ -23,7 +25,15 @@ function Row({ transactionId }) {
 }
 
 export default function Transaction() {
-    const transactions = useSelector(getTransactions);
+    const allTransactions = useSelector(getTransactions);
+    const filters = useSelector(getFilters);
+    const transactions = useMemo(() => {
+        if (!filters.accountId) {
+            return allTransactions;
+        }
+        return allTransactions.filter(trans => trans.accountId === filters.accountId);
+    }, [allTransactions, filters]);
+
     return (
         <div className="Transaction">
             <h1>

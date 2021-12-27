@@ -8,6 +8,7 @@ import uuid from '../../util/uuid';
 import { FormattedMessage } from 'react-intl';
 import { editAccount, getAccountById, removeAccount } from '../../state/accounts';
 import { getCategoriesByType } from '../../state/categories';
+import { setFilters } from '../../state/filters';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -115,8 +116,14 @@ function DeleteItem({ accountId }) {
 export default function Account({ accountId }) {
     const account = useSelector(state => getAccountById(state, accountId));
     const transactions = useSelector(state => getTransactionsByAccountId(state, accountId));
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const handleClick = useCallback(() => navigate("/app/transaction"), [navigate]);
+
+    const handleClick = useCallback(() => {
+        dispatch(setFilters({ accountId }));
+        navigate("/app/transaction")
+    }, [navigate, accountId, dispatch]);
+
     const amount = useMemo(() => transactions.reduce((acc, trans) => acc + trans.amount, 0), [transactions]);
 
     return (
