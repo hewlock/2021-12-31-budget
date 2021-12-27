@@ -10,10 +10,13 @@ import { today } from '../../util/date';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-const INITIAL_FORM = {
-    balance: 0,
-    name: '',
-    budget: true,
+function toForm() {
+    return {
+        balance: 0,
+        budget: true,
+        key: uuid(),
+        name: '',
+    }
 }
 
 export default function AddAccountButton() {
@@ -21,11 +24,11 @@ export default function AddAccountButton() {
     const category = useSelector(state => getCategoriesByType(state, 'initial-balance')[0]);
 
     const [show, setShowTrue, setShowFalse] = useBooleanState(false);
-    const [form, setForm] = useState(INITIAL_FORM);
+    const [form, setForm] = useState(toForm());
 
     useEffect(() => {
         if (show) {
-            setForm(INITIAL_FORM);
+            setForm(toForm());
         }
     }, [show, setForm]);
 
@@ -55,6 +58,7 @@ export default function AddAccountButton() {
         <>
             <EditAccountModal
                 form={form}
+                key={form.key}
                 onCancel={setShowFalse}
                 onChange={setForm}
                 onSave={handleSave}

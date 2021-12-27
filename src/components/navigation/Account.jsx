@@ -4,6 +4,7 @@ import Currency from '../Currency';
 import Dropdown from 'react-bootstrap/Dropdown';
 import EditAccountModal from './EditAccountModal.jsx';
 import useBooleanState from '../../hooks/useBooleanState';
+import uuid from '../../util/uuid';
 import { FormattedMessage } from 'react-intl';
 import { editAccount, getAccountById, removeAccount } from '../../state/accounts';
 import { getCategoriesByType } from '../../state/categories';
@@ -23,6 +24,7 @@ function toForm(account, transaction) {
         balance: transaction.amount,
         budget: account.budget,
         id: account.id,
+        key: uuid(),
         name: account.name,
     };
 }
@@ -65,6 +67,7 @@ function EditItem({ accountId }) {
         <>
             <EditAccountModal
                 form={form}
+                key={form.key}
                 onCancel={setShowFalse}
                 onChange={setForm}
                 onSave={handleSave}

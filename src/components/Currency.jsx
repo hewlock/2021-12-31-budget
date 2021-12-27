@@ -1,5 +1,5 @@
-import toCurrency from '../util/toCurrency';
 import { getCurrency } from '../state/currency';
+import { toCurrency } from '../util/currency';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
