@@ -7,12 +7,14 @@
 
     "account.add": "Add Account",
     "account.balance": "Initial Balance",
+    "account.balance.required": "Initial Balance is required",
     "account.confirm-delete": "Are you sure you would like to delete account \"{name}\"?",
     "account.confirm-delete-details": "This will delete the account and all of its transactions.",
     "account.delete": "Delete Account",
     "account.edit": "Edit Account",
     "account.include": "Include in Budget",
     "account.name": "Name",
+    "account.name.required": "Name is required",
     "account.off": "Off-Budget Accounts",
     "account.on": "Budget Accounts",
 

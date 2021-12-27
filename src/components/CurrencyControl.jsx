@@ -1,13 +1,14 @@
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 import { fromCurrency, toCurrency } from '../util/currency';
 import { getCurrency } from '../state/currency';
 import { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 export default function CurrencyControl({
+    onBlur,
     onChange,
     value,
+    ...props
 }) {
     const currency = useSelector(getCurrency);
     const [display, setDisplay] = useState(toCurrency(value, currency));
@@ -23,19 +24,16 @@ export default function CurrencyControl({
         if (!Number.isNaN(value)) {
             setDisplay(toCurrency(value, currency));
         }
-    }, [value, setDisplay, currency]);
+        onBlur && onBlur();
+    }, [value, setDisplay, currency, onBlur]);
 
     return (
-        <InputGroup>
-            <InputGroup.Text>
-                {currency.currencySymbol}
-            </InputGroup.Text>
-            <Form.Control
-                onBlur={handleBlur}
-                onChange={handleChange}
-                type="text"
-                value={display}
-            />
-        </InputGroup>
+        <Form.Control
+            {...props}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            type="text"
+            value={display}
+        />
     )
 }
