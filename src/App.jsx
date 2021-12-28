@@ -1,9 +1,10 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Budget from './components/budget/Budget.jsx';
+import Budgets from './components/budget/Budgets.jsx';
 import Navigation from './components/navigation/Navigation';
-import Transaction from './components/transaction/Transaction.jsx';
+import Reports from './components/report/Reports.jsx';
+import Transactions from './components/transaction/Transactions.jsx';
 import Welcome from './components/welcome/Welcome';
 
 import {
@@ -35,9 +36,9 @@ export default function App() {
                             </main>
                         </div>
                     }>
-                    <Route path="budget" element={<Budget />} />
-                    <Route path="report" element={<h1>Reports</h1>} />
-                    <Route path="transaction" element={<Transaction />} />
+                    <Route path="budgets" element={<Budgets />} />
+                    <Route path="reports" element={<Reports />} />
+                    <Route path="transactions" element={<Transactions />} />
                 </Route>
             </Routes>
         </BrowserRouter>

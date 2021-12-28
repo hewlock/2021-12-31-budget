@@ -32,20 +32,20 @@ export default function Nav() {
             <div className="list-group">
                 <Link
                     className="list-group-item list-group-item-action"
-                    to="/app/budget"
+                    to="/app/budgets"
                 >
                     <FormattedMessage id="navigation.budget" />
                 </Link>
                 <Link
                     className="list-group-item list-group-item-action"
-                    to="/app/report"
+                    to="/app/reports"
                 >
                     <FormattedMessage id="navigation.reports" />
                 </Link>
                 <Link
                     className="d-flex list-group-item list-group-item-action"
                     onClick={handleClickTransactions}
-                    to="/app/transaction"
+                    to="/app/transactions"
                 >
                     <span className="flex-grow-1">
                         <FormattedMessage id="navigation.transactions" />

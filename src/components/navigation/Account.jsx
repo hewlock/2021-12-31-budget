@@ -121,7 +121,7 @@ export default function Account({ accountId }) {
 
     const handleClick = useCallback(() => {
         dispatch(setFilters({ accountId }));
-        navigate("/app/transaction")
+        navigate("/app/transactions")
     }, [navigate, accountId, dispatch]);
 
     const amount = useMemo(() => transactions.reduce((acc, trans) => acc + trans.amount, 0), [transactions]);

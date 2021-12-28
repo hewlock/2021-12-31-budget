@@ -1,4 +1,4 @@
-import './Budget.css';
+import './Budgets.css';
 import { FormattedMessage } from 'react-intl';
 import { getCategories } from '../../state/categories';
 import { useSelector } from 'react-redux';
@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 export default function Budget() {
     const categories = useSelector(getCategories);
     return (
-        <div className="Budget">
+        <div className="Budgets">
             <h1>
                 <FormattedMessage id="budget.title" />
             </h1>

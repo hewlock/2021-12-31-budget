@@ -10,7 +10,7 @@ export default function Welcome() {
     const navigate = useNavigate();
 
     useEffect(() => dispatch(reset()), [dispatch]);
-    const handleContinue = useCallback(() => navigate("/app/budget"), [navigate]);
+    const handleContinue = useCallback(() => navigate("/app/budgets"), [navigate]);
 
     return (
         <div className="px-4 py-5 my-5 text-center">

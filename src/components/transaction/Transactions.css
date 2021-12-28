@@ -1,16 +1,16 @@
-.Transaction {
+.Transactions {
     width: 100%;
 }
 
-.Transaction td {
+.Transactions td {
     border: .25rem solid white;
     padding: .25rem 1rem;
 }
 
-.Transaction tr:nth-child(odd) td {
+.Transactions tr:nth-child(odd) td {
     background-color: #fafffa;
 }
 
-.Transaction tr:nth-child(even) td {
+.Transactions tr:nth-child(even) td {
     background-color: #f3f9f3;
 }

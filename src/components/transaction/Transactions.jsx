@@ -1,4 +1,4 @@
-import './Transaction.css';
+import './Transactions.css';
 import Currency from '../Currency.jsx';
 import { FormattedMessage } from 'react-intl';
 import { getAccountById } from '../../state/accounts';
@@ -35,7 +35,7 @@ export default function Transaction() {
     }, [allTransactions, filters]);
 
     return (
-        <div className="Transaction">
+        <div className="Transactions">
             <h1>
                 <FormattedMessage id="transaction.title" />
             </h1>
