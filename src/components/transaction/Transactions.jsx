@@ -1,4 +1,5 @@
 import './Transactions.css';
+import AddTransaction from './AddTransaction';
 import Currency from '../Currency.jsx';
 import { FormattedMessage } from 'react-intl';
 import { getAccountById } from '../../state/accounts';
@@ -16,10 +17,10 @@ function Row({ transactionId }) {
     return (
         <tr key={transaction.id}>
             <td>{transaction.id}</td>
+            <td>{transaction.date}</td>
             <td>{account.name}</td>
             <td>{category.group} : {category.name}</td>
             <td className="text-end"><Currency value={transaction.amount}/></td>
-            <td>{transaction.date}</td>
         </tr>
     );
 }
@@ -40,6 +41,25 @@ export default function Transaction() {
                 <FormattedMessage id="transaction.title" />
             </h1>
             <table>
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            <FormattedMessage id="date" />
+                        </th>
+                        <th>
+                            <FormattedMessage id="account" />
+                        </th>
+                        <th>
+                            <FormattedMessage id="category" />
+                        </th>
+                        <th>
+                            <FormattedMessage id="amount" />
+                        </th>
+                    </tr>
+                </thead>
                 <tbody>
                     {transactions.map((transaction) => (
                         <Row
@@ -47,6 +67,7 @@ export default function Transaction() {
                             transactionId={transaction.id}
                         />
                     ))}
+                    <AddTransaction />
                 </tbody>
             </table>
         </div>

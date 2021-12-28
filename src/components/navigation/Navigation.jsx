@@ -26,7 +26,7 @@ export default function Nav() {
                     className="text-body text-decoration-none"
                     to="/"
                 >
-                    <FormattedMessage id="app-name" />
+                    <FormattedMessage id="app.title" />
                 </Link>
             </h1>
             <div className="list-group">

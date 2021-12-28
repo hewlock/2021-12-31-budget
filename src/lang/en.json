@@ -1,6 +1,9 @@
 {
-    "app-name": "Budget",
+    "account": "Account",
+    "amount": "Amount",
     "cancel": "Cancel",
+    "category": "Category",
+    "date": "Date",
     "delete": "Delete",
     "ok": "OK",
     "save": "Save",
@@ -17,6 +20,8 @@
     "account.name.required": "Name is required",
     "account.off": "Off-Budget Accounts",
     "account.on": "Budget Accounts",
+
+    "app.title": "Budget",
 
     "budget.title": "Budget View",
 

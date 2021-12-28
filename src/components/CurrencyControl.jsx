@@ -16,7 +16,7 @@ export default function CurrencyControl({
     const handleChange = useCallback(e => {
         const stringVal = e.target.value;
         const intVal = fromCurrency(stringVal, currency);
-        onChange(intVal);
+        onChange({ ...e, target: { name: e.target.name, value: intVal }});
         setDisplay(stringVal);
     }, [onChange, currency]);
 

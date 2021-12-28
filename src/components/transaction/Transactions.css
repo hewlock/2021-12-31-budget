@@ -2,6 +2,13 @@
     width: 100%;
 }
 
+.Transactions th {
+    background-color: #f0f9f0;
+    border: .25rem solid white;
+    padding: .25rem 1rem;
+    text-align: center;
+}
+
 .Transactions td {
     border: .25rem solid white;
     padding: .25rem 1rem;
@@ -13,4 +20,8 @@
 
 .Transactions tr:nth-child(even) td {
     background-color: #f3f9f3;
+}
+
+.Transactions .text-end input {
+    text-align: right !important;
 }

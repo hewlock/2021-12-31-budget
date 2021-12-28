@@ -15,7 +15,7 @@ export default function Welcome() {
     return (
         <div className="px-4 py-5 my-5 text-center">
             <h1 className="fw-bold display-5">
-                <FormattedMessage id="app-name" />
+                <FormattedMessage id="app.title" />
             </h1>
             <p className="lead mb-4">
                 <FormattedMessage id="welcome.lead" />

@@ -47,8 +47,8 @@ export default function EditAccountModal({
         setValidation(validate(trimmedForm));
     }, [form, onChange]);
 
-    const handleBalanceChange = useCallback((balance) =>
-        onChange(Object.assign({}, form, { balance })),
+    const handleBalanceChange = useCallback((e) =>
+        onChange(Object.assign({}, form, { balance: e.target.value })),
         [form, onChange]
     );
 
