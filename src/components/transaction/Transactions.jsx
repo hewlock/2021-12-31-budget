@@ -21,6 +21,7 @@ function Row({ transactionId }) {
             <td>{account.name}</td>
             <td>{category.group} : {category.name}</td>
             <td className="text-end"><Currency value={transaction.amount}/></td>
+            <td></td>
         </tr>
     );
 }
@@ -57,6 +58,9 @@ export default function Transaction() {
                         </th>
                         <th>
                             <FormattedMessage id="amount" />
+                        </th>
+                        <th>
+                            <FormattedMessage id="actions" />
                         </th>
                     </tr>
                 </thead>

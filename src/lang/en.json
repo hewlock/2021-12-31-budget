@@ -1,10 +1,13 @@
 {
     "account": "Account",
+    "actions": "Actions",
+    "add": "Add",
     "amount": "Amount",
     "cancel": "Cancel",
     "category": "Category",
     "date": "Date",
     "delete": "Delete",
+    "reset": "Reset",
     "ok": "OK",
     "save": "Save",
 

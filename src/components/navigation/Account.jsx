@@ -1,3 +1,4 @@
+import Button from 'react-bootstrap/Button';
 import ConfirmModal from '../ConfirmModal';
 import ContextMenu from '../ContextMenu';
 import Currency from '../Currency';
@@ -75,7 +76,7 @@ function EditItem({ accountId }) {
                 show={show}
                 title="account.edit"
             />
-            <Dropdown.Item onClick={setShowTrue}>
+            <Dropdown.Item as={Button} onClick={setShowTrue}>
                 <FormattedMessage id="account.edit" />
             </Dropdown.Item>
         </>
@@ -106,7 +107,7 @@ function DeleteItem({ accountId }) {
                 show={show}
                 titleKey="account.delete"
             />
-            <Dropdown.Item onClick={setShowTrue}>
+            <Dropdown.Item as={Button} onClick={setShowTrue}>
                 <FormattedMessage id="account.delete" />
             </Dropdown.Item>
         </>
