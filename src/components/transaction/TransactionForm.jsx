@@ -1,4 +1,7 @@
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import CurrencyControl from '../CurrencyControl';
+import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { FormattedMessage } from 'react-intl';
@@ -23,10 +26,24 @@ export function validate(form, validated = false) {
     });
 }
 
+function Action({ actionKey, onClick }) {
+    const handleClick = useCallback(() => onClick(actionKey), [actionKey, onClick])
+
+    return (
+        <Dropdown.Item as={Button} onClick={handleClick}>
+            <FormattedMessage id={actionKey}/>
+        </Dropdown.Item>
+    );
+}
+
 export default function TransactionForm({
+    actionKeys,
     children,
     form,
+    onAction,
     onChange,
+    onSave,
+    saveKey,
 }) {
     const accounts = useSelector(getAccounts);
     const categories = useSelector(getCategories);
@@ -39,6 +56,16 @@ export default function TransactionForm({
     const handleChange = useCallback((e) => {
         onChange(Object.assign({}, form, { [e.target.name]: e.target.value }));
     }, [form, onChange]);
+
+    const handleSave = useCallback(() => {
+        const validated = validate(form, true);
+        if (validated.valid) {
+            onSave(validated);
+        }
+        else {
+            onChange(validated);
+        }
+    }, [form, onChange, onSave]);
 
     return (
         <tr>
@@ -122,7 +149,21 @@ export default function TransactionForm({
                 </Form.Group>
             </td>
             <td>
-                {children}
+                <Dropdown as={ButtonGroup}>
+                    <Button variant="primary" onClick={handleSave}>
+                        <FormattedMessage id={saveKey} />
+                    </Button>
+                    <Dropdown.Toggle split={true} variant="primary" />
+                    <Dropdown.Menu>
+                        {actionKeys.map(actionKey => (
+                            <Action
+                                actionKey={actionKey}
+                                key={actionKey}
+                                onClick={onAction}
+                            />
+                        ))}
+                    </Dropdown.Menu>
+                </Dropdown>
             </td>
         </tr>
     );

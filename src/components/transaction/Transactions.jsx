@@ -1,32 +1,14 @@
 import './Transactions.css';
 import AddTransaction from './AddTransaction';
-import Currency from '../Currency.jsx';
+import Transaction from './Transaction';
 import { FormattedMessage } from 'react-intl';
-import { getAccountById } from '../../state/accounts';
-import { getCategoryById } from '../../state/categories';
 import { getFilters } from '../../state/filters';
-import { getTransactions, getTransactionById } from '../../state/transactions';
+import { getTransactions } from '../../state/transactions';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-function Row({ transactionId }) {
-    const transaction = useSelector(state => getTransactionById(state, transactionId));
-    const category = useSelector(state => getCategoryById(state, transaction.categoryId));
-    const account = useSelector(state => getAccountById(state, transaction.accountId));
 
-    return (
-        <tr key={transaction.id}>
-            <td>{transaction.id}</td>
-            <td>{transaction.date}</td>
-            <td>{account.name}</td>
-            <td>{category.group} : {category.name}</td>
-            <td className="text-end"><Currency value={transaction.amount}/></td>
-            <td></td>
-        </tr>
-    );
-}
-
-export default function Transaction() {
+export default function Transactions() {
     const allTransactions = useSelector(getTransactions);
     const filters = useSelector(getFilters);
     const transactions = useMemo(() => {
@@ -66,7 +48,7 @@ export default function Transaction() {
                 </thead>
                 <tbody>
                     {transactions.map((transaction) => (
-                        <Row
+                        <Transaction
                             key={transaction.id}
                             transactionId={transaction.id}
                         />

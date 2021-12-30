@@ -1,17 +1,20 @@
 import TransactionForm from './TransactionForm';
 import uuid from '../../util/uuid';
-import { addTransaction } from '../../state/transactions';
+import { editTransaction } from '../../state/transactions';
+import { getTransactionById } from '../../state/transactions';
 import { useCallback, useState} from 'react';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-function newForm() {
+function newForm(transaction) {
     return {
-        id: uuid(),
+        key: uuid(),
 
-        accountId: '',
-        amount: 0,
-        categoryId: '',
-        date: '',
+        accountId: transaction.accountId,
+        amount: transaction.amount,
+        categoryId: transaction.categoryId,
+        date: transaction.date,
+        id: transaction.id,
 
         valid: false,
         validated: false,
@@ -24,38 +27,38 @@ function newForm() {
     };
 }
 
-const ACTION_KEYS = ['reset'];
+const ACTION_KEYS = ['reset', 'delete'];
 
-export default function AddTransaction() {
+export default function Transaction({ transactionId }) {
     const dispatch = useDispatch();
-    const [form, setForm] = useState(() => newForm());
+    const transaction = useSelector(state => getTransactionById(state, transactionId));
+    const [form, setForm] = useState(() => newForm(transaction));
 
     const handleSave = useCallback((form) => {
-        dispatch(addTransaction({
+        dispatch(editTransaction({
             accountId: form.accountId,
             amount: form.amount,
             categoryId: form.categoryId,
             date: form.date,
             id: form.id,
         }));
-        setForm(newForm());
-    }, [dispatch, setForm]);
+    }, [dispatch]);
 
     const handleAction = useCallback((key) => {
         if (key === 'reset') {
-            setForm(newForm());
+            setForm(newForm(transaction));
         }
-    }, [setForm]);
+    }, [setForm, transaction]);
 
     return (
         <TransactionForm
             actionKeys={ACTION_KEYS}
             form={form}
-            key={form.id}
+            key={form.key}
             onAction={handleAction}
             onChange={setForm}
             onSave={handleSave}
-            saveKey="add"
+            saveKey="save"
         />
     );
 }
