@@ -24,38 +24,35 @@ function newForm() {
     };
 }
 
-const ACTION_KEYS = ['reset'];
+const ACTIONS = ['add', 'reset'];
 
 export default function AddTransaction() {
     const dispatch = useDispatch();
     const [form, setForm] = useState(() => newForm());
 
-    const handleSave = useCallback((form) => {
-        dispatch(addTransaction({
-            accountId: form.accountId,
-            amount: form.amount,
-            categoryId: form.categoryId,
-            date: form.date,
-            id: form.id,
-        }));
-        setForm(newForm());
-    }, [dispatch, setForm]);
-
-    const handleAction = useCallback((key) => {
-        if (key === 'reset') {
+    const handleAction = useCallback((action, form) => {
+        if (action === 'add') {
+            dispatch(addTransaction({
+                accountId: form.accountId,
+                amount: form.amount,
+                categoryId: form.categoryId,
+                date: form.date,
+                id: form.id,
+            }));
             setForm(newForm());
         }
-    }, [setForm]);
+        if (action === 'reset') {
+            setForm(newForm());
+        }
+    }, [dispatch, setForm]);
 
     return (
         <TransactionForm
-            actionKeys={ACTION_KEYS}
+            actions={ACTIONS}
             form={form}
             key={form.id}
             onAction={handleAction}
             onChange={setForm}
-            onSave={handleSave}
-            saveKey="add"
         />
     );
 }

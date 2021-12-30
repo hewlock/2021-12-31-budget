@@ -1,7 +1,5 @@
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import ActionMenu from '../ActionMenu';
 import CurrencyControl from '../CurrencyControl';
-import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { FormattedMessage } from 'react-intl';
@@ -26,24 +24,11 @@ export function validate(form, validated = false) {
     });
 }
 
-function Action({ actionKey, onClick }) {
-    const handleClick = useCallback(() => onClick(actionKey), [actionKey, onClick])
-
-    return (
-        <Dropdown.Item as={Button} onClick={handleClick}>
-            <FormattedMessage id={actionKey}/>
-        </Dropdown.Item>
-    );
-}
-
 export default function TransactionForm({
-    actionKeys,
-    children,
+    actions,
     form,
     onAction,
     onChange,
-    onSave,
-    saveKey,
 }) {
     const accounts = useSelector(getAccounts);
     const categories = useSelector(getCategories);
@@ -57,15 +42,20 @@ export default function TransactionForm({
         onChange(Object.assign({}, form, { [e.target.name]: e.target.value }));
     }, [form, onChange]);
 
-    const handleSave = useCallback(() => {
-        const validated = validate(form, true);
-        if (validated.valid) {
-            onSave(validated);
+    const handleAction = useCallback((action) => {
+        if (actions[0] === action) {
+            const validated = validate(form, true);
+            if (validated.valid) {
+                onAction(action, validated);
+            }
+            else {
+                onChange(validated);
+            }
         }
         else {
-            onChange(validated);
+            onAction(action, form);
         }
-    }, [form, onChange, onSave]);
+    }, [actions, form, onChange, onAction]);
 
     return (
         <tr>
@@ -149,21 +139,10 @@ export default function TransactionForm({
                 </Form.Group>
             </td>
             <td>
-                <Dropdown as={ButtonGroup}>
-                    <Button variant="primary" onClick={handleSave}>
-                        <FormattedMessage id={saveKey} />
-                    </Button>
-                    <Dropdown.Toggle split={true} variant="primary" />
-                    <Dropdown.Menu>
-                        {actionKeys.map(actionKey => (
-                            <Action
-                                actionKey={actionKey}
-                                key={actionKey}
-                                onClick={onAction}
-                            />
-                        ))}
-                    </Dropdown.Menu>
-                </Dropdown>
+                <ActionMenu
+                    actions={actions}
+                    onAction={handleAction}
+                />
             </td>
         </tr>
     );

@@ -1,5 +1,5 @@
 import findWhere from '../util/findWhere';
-import normalize, { add, edit, removeWhere } from '../util/reducer.js';
+import normalize, { add, edit, remove, removeWhere } from '../util/reducer.js';
 
 // Constants
 
@@ -28,6 +28,7 @@ function comparator(a, b) {
 
 const ADD = 'transactions/ADD';
 const EDIT = 'transactions/EDIT';
+const REMOVE = 'accounts/REMOVE';
 const REMOVE_WHERE = 'accounts/REMOVE_WHERE';
 
 // Action Creators
@@ -42,6 +43,13 @@ export function addTransaction(transaction) {
 export function editTransaction(transaction) {
     return {
         type: EDIT,
+        payload: transaction,
+    }
+}
+
+export function removeTransaction(transaction) {
+    return {
+        type: REMOVE,
         payload: transaction,
     }
 }
@@ -79,6 +87,8 @@ export default function reducer(state = INITIAL_STATE, action) {
         return normalize(add(state.byId, action.payload), comparator, INDICES);
     case EDIT:
         return normalize(edit(state.byId, action.payload), comparator, INDICES);
+    case REMOVE:
+        return normalize(remove(state.byId, action.payload), comparator, INDICES);
     case REMOVE_WHERE:
         return normalize(removeWhere(state.byId, action.payload), comparator, INDICES);
     default:

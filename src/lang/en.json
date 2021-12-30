@@ -7,8 +7,9 @@
     "category": "Category",
     "date": "Date",
     "delete": "Delete",
-    "reset": "Reset",
+    "edit": "Edit",
     "ok": "OK",
+    "reset": "Reset",
     "save": "Save",
 
     "account.add": "Add Account",

@@ -1,6 +1,6 @@
 import TransactionForm from './TransactionForm';
 import uuid from '../../util/uuid';
-import { editTransaction } from '../../state/transactions';
+import { editTransaction, removeTransaction } from '../../state/transactions';
 import { getTransactionById } from '../../state/transactions';
 import { useCallback, useState} from 'react';
 import { useDispatch } from 'react-redux';
@@ -27,38 +27,38 @@ function newForm(transaction) {
     };
 }
 
-const ACTION_KEYS = ['reset', 'delete'];
+const ACTIONS = ['save', 'reset', 'delete'];
 
 export default function Transaction({ transactionId }) {
     const dispatch = useDispatch();
     const transaction = useSelector(state => getTransactionById(state, transactionId));
     const [form, setForm] = useState(() => newForm(transaction));
 
-    const handleSave = useCallback((form) => {
-        dispatch(editTransaction({
-            accountId: form.accountId,
-            amount: form.amount,
-            categoryId: form.categoryId,
-            date: form.date,
-            id: form.id,
-        }));
-    }, [dispatch]);
-
-    const handleAction = useCallback((key) => {
-        if (key === 'reset') {
+    const handleAction = useCallback((action, form) => {
+        if (action === 'save') {
+            dispatch(editTransaction({
+                accountId: form.accountId,
+                amount: form.amount,
+                categoryId: form.categoryId,
+                date: form.date,
+                id: form.id,
+            }));
+        }
+        if (action === 'reset') {
             setForm(newForm(transaction));
         }
-    }, [setForm, transaction]);
+        if (action === 'delete') {
+            dispatch(removeTransaction(transaction));
+        }
+    }, [dispatch, setForm, transaction]);
 
     return (
         <TransactionForm
-            actionKeys={ACTION_KEYS}
+            actions={ACTIONS}
             form={form}
             key={form.key}
             onAction={handleAction}
             onChange={setForm}
-            onSave={handleSave}
-            saveKey="save"
         />
     );
 }
