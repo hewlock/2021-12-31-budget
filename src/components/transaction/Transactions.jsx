@@ -27,9 +27,6 @@ export default function Transactions() {
                 <thead>
                     <tr>
                         <th>
-                            ID
-                        </th>
-                        <th>
                             <FormattedMessage id="date" />
                         </th>
                         <th>

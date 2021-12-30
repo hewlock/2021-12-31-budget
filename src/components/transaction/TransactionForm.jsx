@@ -60,9 +60,6 @@ export default function TransactionForm({
     return (
         <tr>
             <td>
-                {form.id}
-            </td>
-            <td>
                 <Form.Group controlId={`${form.id}-date`}>
                     <Form.Label visuallyHidden={true}>
                         <FormattedMessage id="date" />
