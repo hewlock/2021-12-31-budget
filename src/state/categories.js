@@ -5,6 +5,7 @@ import normalize, { add } from '../util/reducer.js'
 const INTIAL_STATE = {
     byId: {},
     byOrder: [],
+    byGroupId: {},
     byType: {},
 };
 
@@ -16,7 +17,8 @@ export const NEW_CATEGORY = {
 }
 
 const INDICES = {
-    byType: 'type'
+    byGroupId: 'groupId',
+    byType: 'type',
 }
 
 function comparator(a, b) {
@@ -44,6 +46,10 @@ export function getCategories(state) {
 
 export function getCategoryById(state, id) {
     return state.categories.byId[id];
+}
+
+export function getCategoriesByGroupId(state, groupId) {
+    return state.categories.byGroupId[groupId];
 }
 
 export function getCategoriesByType(state, type) {

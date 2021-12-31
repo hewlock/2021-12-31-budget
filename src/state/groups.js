@@ -33,6 +33,10 @@ export function addGroup(group) {
 
 // Selectors
 
+export function getGroupsByOrder(state) {
+    return state.groups.byOrder;
+}
+
 export function getGroupsById(state) {
     return state.groups.byId;
 }

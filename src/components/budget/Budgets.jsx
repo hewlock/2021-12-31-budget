@@ -1,27 +1,20 @@
 import './Budgets.css';
+import Group from './Group';
 import { FormattedMessage } from 'react-intl';
-import { getCategories } from '../../state/categories';
+import { getGroupsByOrder } from '../../state/groups';
 import { useSelector } from 'react-redux';
 
-export default function Budget() {
-    const categories = useSelector(getCategories);
+export default function Budgets() {
+    const groups = useSelector(getGroupsByOrder);
+
     return (
-        <div className="Budgets">
+        <div className="Budgets Navigation">
             <h1>
                 <FormattedMessage id="budget.title" />
             </h1>
-            <table>
-                <tbody>
-                    {categories.map((category) => (
-                        <tr key={category.id}>
-                            <td>{category.id}</td>
-                            <td>{category.groupId}</td>
-                            <td>{category.name}</td>
-                            <td>{category.type}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            {groups.map((group) => (
+                <Group key={group.id} groupId={group.id} />
+            ))}
         </div>
     );
 }
