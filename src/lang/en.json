@@ -30,6 +30,10 @@
 
     "budget.title": "Budget View",
 
+    "category.confirm-delete": "Are you sure you would like to delete category \"{name}\"?",
+    "category.confirm-delete-details": "This will delete the category and all of its transactions.",
+    "category.delete": "Delete Category",
+
     "navigation.budget": "Budget",
     "navigation.reports": "Reports",
     "navigation.transactions": "All Transactions",

@@ -1,5 +1,8 @@
+import ConfirmModal from '../ConfirmModal';
 import ContextMenu from '../ContextMenu';
-import { getCategoriesById, removeCategory } from '../../state/categories';
+import RenameControl from '../RenameControl';
+import useBooleanState from '../../hooks/useBooleanState';
+import { editCategory, getCategoriesById, removeCategory } from '../../state/categories';
 import { removeTransactionWhere } from '../../state/transactions';
 import { setFilters } from '../../state/filters';
 import { useCallback } from 'react';
@@ -12,6 +15,8 @@ export default function Category({ categoryId }) {
     const category = useSelector(state => getCategoriesById(state, categoryId));
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [rename, setRenameTrue, setRenameFalse] = useBooleanState(false);
+    const [confirm, setConfirmTrue, setConfirmFalse] = useBooleanState(false);
 
     const handleClick = useCallback(() => {
         dispatch(setFilters({ categoryId }));
@@ -20,20 +25,53 @@ export default function Category({ categoryId }) {
 
     const handleAction = useCallback(action => {
         if (action === 'delete') {
-            dispatch(removeTransactionWhere({ categoryId: category.id }));
-            dispatch(removeCategory(category));
+            setConfirmTrue();
         }
-        console.log(action);
-    }, [ category ]);
+        if (action === 'rename') {
+            setRenameTrue();
+        }
+    }, [setConfirmTrue, setRenameTrue]);
+
+    const handleDelete = useCallback(() => {
+        dispatch(removeTransactionWhere({ categoryId: category.id }));
+        dispatch(removeCategory(category));
+    }, [dispatch, category]);
+
+    const handleRename = useCallback(name => {
+        dispatch(editCategory(Object.assign({}, category, { name })));
+        setRenameFalse();
+    }, [category, dispatch, setRenameFalse]);
 
     return (
-        <ContextMenu
-            actions={ACTIONS}
-            id={`action-${categoryId}`}
-            onAction={handleAction}
-            onClick={handleClick}
-        >
-            {category.name}
-        </ContextMenu>
+        <>
+            <ConfirmModal
+                confirmKey="delete"
+                confirmVariant="danger"
+                detailsKey="category.confirm-delete-details"
+                messageKey="category.confirm-delete"
+                messageValues={category}
+                onCancel={setConfirmFalse}
+                onConfirm={handleDelete}
+                show={confirm}
+                titleKey="category.delete"
+            />
+            {rename &&
+                <RenameControl
+                    onCancel={setRenameFalse}
+                    onSave={handleRename}
+                    value={category.name}
+                />
+            }
+            {!rename &&
+                <ContextMenu
+                    actions={ACTIONS}
+                    id={`action-${categoryId}`}
+                    onAction={handleAction}
+                    onClick={handleClick}
+                >
+                    {category.name}
+                </ContextMenu>
+            }
+        </>
     );
 }

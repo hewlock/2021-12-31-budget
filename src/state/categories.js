@@ -16,6 +16,7 @@ const STORE = 'categories';
 // Action Creators
 const storeAction = action(STORE);
 export const addCategory = storeAction('ADD');
+export const editCategory = storeAction('EDIT');
 export const removeCategory = storeAction('REMOVE');
 
 // Selectors
