@@ -21,7 +21,7 @@ export function removeWhere(byId, criteria) {
     return result;
 }
 
-export default function normalize(byId, comparator, indices = {}) {
+export function normalize(byId, comparator, indices = {}) {
     return Object.keys(indices).reduce((acc, index) => {
         const property = indices[index];
         acc[index] = acc.byOrder.reduce((acc, item) => {
@@ -37,4 +37,22 @@ export default function normalize(byId, comparator, indices = {}) {
         byId,
         byOrder: Object.values(byId).sort(comparator)
     });
+}
+
+export default function reducer(store, comparator, indices) {
+    const initialState = normalize({}, comparator, indices)
+    return function(state = initialState, action) {
+        switch (action.type) {
+        case `${store}/ADD`:
+            return normalize(add(state.byId, action.payload), comparator, indices);
+        case `${store}/EDIT`:
+            return normalize(edit(state.byId, action.payload), comparator, indices);
+        case `${store}/REMOVE`:
+            return normalize(remove(state.byId, action.payload), comparator, indices);
+        case `${store}/REMOVE_WHERE`:
+            return normalize(removeWhere(state.byId, action.payload), comparator, indices);
+        default:
+            return state;
+        }
+    }
 }

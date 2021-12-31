@@ -1,14 +1,9 @@
-import normalize, { add } from '../util/reducer.js'
+import action from '../util/action';
+import localeComparator from '../util/localeComparator'
+import reducer from '../util/reducer';
+import select from '../util/select';
 
 // Constants
-
-const INTIAL_STATE = {
-    byId: {},
-    byOrder: [],
-    byGroupId: {},
-    byType: {},
-};
-
 export const NEW_CATEGORY = {
     groupId: null,
     id: null,
@@ -16,53 +11,22 @@ export const NEW_CATEGORY = {
     type: '',
 }
 
-const INDICES = {
-    byGroupId: 'groupId',
-    byType: 'type',
-}
-
-function comparator(a, b) {
-    return a.name.localeCompare(b.name)
-}
-
-// Actions
-
-const ADD = 'categories/ADD';
+const STORE = 'categories';
 
 // Action Creators
-
-export function addCategory(category) {
-    return {
-        type: ADD,
-        payload: category,
-    }
-}
+const storeAction = action(STORE);
+export const addCategory = storeAction('ADD');
+export const removeCategory = storeAction('REMOVE');
 
 // Selectors
-
-export function getCategories(state) {
-    return state.categories.byOrder;
-}
-
-export function getCategoryById(state, id) {
-    return state.categories.byId[id];
-}
-
-export function getCategoriesByGroupId(state, groupId) {
-    return state.categories.byGroupId[groupId];
-}
-
-export function getCategoriesByType(state, type) {
-    return state.categories.byType[type];
-}
+const storeSelect = select(STORE);
+export const getCategoriesByOrder = storeSelect('byOrder', [], null);
+export const getCategoriesById = storeSelect('byId', {}, null);
+export const getCategoriesByGroupId = storeSelect('byGroupId',{}, []);
+export const getCategoriesByType = storeSelect('byType',{}, []);
 
 // Reducer
-
-export default function reducer(state = INTIAL_STATE, action) {
-    switch (action.type) {
-    case ADD:
-        return normalize(add(state.byId, action.payload), comparator, INDICES);
-    default:
-        return state;
-    }
-}
+export default reducer(STORE, localeComparator('name'), {
+    byGroupId: 'groupId',
+    byType: 'type',
+});

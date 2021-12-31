@@ -1,5 +1,6 @@
 const initialState = {
     accountId: null,
+    categoryId: null,
 }
 
 // Actions

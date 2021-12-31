@@ -1,13 +1,13 @@
 import Button from 'react-bootstrap/Button';
 import ConfirmModal from '../ConfirmModal';
-import ContextMenu from '../ContextMenu';
 import Currency from '../Currency';
 import Dropdown from 'react-bootstrap/Dropdown';
 import EditAccountModal from './EditAccountModal.jsx';
 import useBooleanState from '../../hooks/useBooleanState';
 import uuid from '../../util/uuid';
+import { ContextMenuButton } from '../ContextMenu';
 import { FormattedMessage } from 'react-intl';
-import { editAccount, getAccountById, removeAccount } from '../../state/accounts';
+import { editAccount, getAccountsById, removeAccount } from '../../state/accounts';
 import { getCategoriesByType } from '../../state/categories';
 import { setFilters } from '../../state/filters';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -33,7 +33,7 @@ function toForm(account, transaction) {
 
 function EditItem({ accountId }) {
     const dispatch = useDispatch();
-    const account = useSelector(state => getAccountById(state, accountId));
+    const account = useSelector(state => getAccountsById(state, accountId));
     const category = useSelector(state => getCategoriesByType(state, 'initial-balance')[0]);
     const transaction = useSelector(state => findTransactions(state, { categoryId: category.id, accountId: account.id})[0]);
 
@@ -84,7 +84,7 @@ function EditItem({ accountId }) {
 }
 
 function DeleteItem({ accountId }) {
-    const account = useSelector(state => getAccountById(state, accountId));
+    const account = useSelector(state => getAccountsById(state, accountId));
     const dispatch = useDispatch();
 
     const [show, setShowTrue, setShowFalse] = useBooleanState(false);
@@ -115,7 +115,7 @@ function DeleteItem({ accountId }) {
 }
 
 export default function Account({ accountId }) {
-    const account = useSelector(state => getAccountById(state, accountId));
+    const account = useSelector(state => getAccountsById(state, accountId));
     const transactions = useSelector(state => getTransactionsByAccountId(state, accountId));
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -131,7 +131,7 @@ export default function Account({ accountId }) {
         <>
             <Dropdown>
                 <Dropdown.Toggle
-                    as={ContextMenu}
+                    as={ContextMenuButton}
                     id={`edit-${accountId}`}
                     onLeftClick={handleClick}
                     variant="account"

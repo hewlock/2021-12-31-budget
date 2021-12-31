@@ -1,57 +1,24 @@
-import normalize, { add } from '../util/reducer.js'
+import action from '../util/action';
+import localeComparator from '../util/localeComparator'
+import reducer from '../util/reducer';
+import select from '../util/select';
 
 // Constants
-
-const INTIAL_STATE = {
-    byId: {},
-    byOrder: [],
-};
-
 export const NEW_GROUP = {
     id: null,
     name: '',
 }
 
-const INDICES = {}
-
-function comparator(a, b) {
-    return a.name.localeCompare(b.name)
-}
-
-// Actions
-
-const ADD = 'groups/ADD';
+const STORE = 'groups';
 
 // Action Creators
-
-export function addGroup(group) {
-    return {
-        type: ADD,
-        payload: group,
-    }
-}
+const storeAction = action(STORE);
+export const addGroup = storeAction('ADD');
 
 // Selectors
-
-export function getGroupsByOrder(state) {
-    return state.groups.byOrder;
-}
-
-export function getGroupsById(state) {
-    return state.groups.byId;
-}
-
-export function getGroupById(state, id) {
-    return state.groups.byId[id];
-}
+const storeSelect = select(STORE);
+export const getGroupsByOrder = storeSelect('byOrder', [], null);
+export const getGroupsById = storeSelect('byId', {}, null);
 
 // Reducer
-
-export default function reducer(state = INTIAL_STATE, action) {
-    switch (action.type) {
-    case ADD:
-        return normalize(add(state.byId, action.payload), comparator, INDICES);
-    default:
-        return state;
-    }
-}
+export default reducer(STORE, localeComparator('name'), {});

@@ -1,11 +1,11 @@
 import Accordion from 'react-bootstrap/Accordion';
 import Category from './Category';
 import { getCategoriesByGroupId } from '../../state/categories';
-import { getGroupById } from '../../state/groups';
+import { getGroupsById } from '../../state/groups';
 import { useSelector } from 'react-redux';
 
 export default function Group({ groupId }) {
-    const group = useSelector(state => getGroupById(state, groupId));
+    const group = useSelector(state => getGroupsById(state, groupId));
     const categories = useSelector(state => getCategoriesByGroupId(state, groupId));
 
     return (

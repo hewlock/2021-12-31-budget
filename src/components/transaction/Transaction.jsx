@@ -3,9 +3,9 @@ import Currency from '../Currency';
 import TransactionForm from './TransactionForm';
 import uuid from '../../util/uuid';
 import { editTransaction, removeTransaction } from '../../state/transactions';
-import { getAccountById } from '../../state/accounts';
-import { getCategoryById } from '../../state/categories';
-import { getGroupById } from '../../state/groups';
+import { getAccountsById } from '../../state/accounts';
+import { getCategoriesById } from '../../state/categories';
+import { getGroupsById } from '../../state/groups';
 import { getTransactionById } from '../../state/transactions';
 import { useCallback, useState} from 'react';
 import { useDispatch } from 'react-redux';
@@ -38,9 +38,9 @@ const EDIT_ACTIONS = ['save', 'cancel', 'delete'];
 export default function Transaction({ transactionId }) {
     const dispatch = useDispatch();
     const transaction = useSelector(state => getTransactionById(state, transactionId));
-    const account = useSelector(state => getAccountById(state, transaction.accountId));
-    const category = useSelector(state => getCategoryById(state, transaction.categoryId));
-    const group = useSelector(state => getGroupById(state, category.groupId));
+    const account = useSelector(state => getAccountsById(state, transaction.accountId));
+    const category = useSelector(state => getCategoriesById(state, transaction.categoryId));
+    const group = useSelector(state => getGroupsById(state, category.groupId));
     const [form, setForm] = useState(() => newForm(transaction));
     const [edit, setEdit] = useState(false);
 

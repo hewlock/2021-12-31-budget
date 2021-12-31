@@ -3,19 +3,21 @@ import AddTransaction from './AddTransaction';
 import Transaction from './Transaction';
 import { FormattedMessage } from 'react-intl';
 import { getFilters } from '../../state/filters';
-import { getTransactions } from '../../state/transactions';
+import { getTransactionsByOrder } from '../../state/transactions';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-
 export default function Transactions() {
-    const allTransactions = useSelector(getTransactions);
+    const allTransactions = useSelector(getTransactionsByOrder);
     const filters = useSelector(getFilters);
     const transactions = useMemo(() => {
-        if (!filters.accountId) {
-            return allTransactions;
+        if (null !== filters.accountId) {
+            return allTransactions.filter(trans => trans.accountId === filters.accountId);
         }
-        return allTransactions.filter(trans => trans.accountId === filters.accountId);
+        if (null !== filters.categoryId) {
+            return allTransactions.filter(trans => trans.categoryId === filters.categoryId);
+        }
+        return allTransactions;
     }, [allTransactions, filters]);
 
     return (

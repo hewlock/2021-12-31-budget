@@ -3,13 +3,13 @@ import Account from './Account';
 import Currency from '../Currency'
 import { FormattedMessage } from 'react-intl';
 import { getAccountsByBudget } from '../../state/accounts';
-import { getTransactions } from '../../state/transactions';
+import { getTransactionsByOrder } from '../../state/transactions';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 export default function AccountList({ budget }) {
     const accounts = useSelector(state => getAccountsByBudget(state, budget));
-    const transactions = useSelector(getTransactions);
+    const transactions = useSelector(getTransactionsByOrder);
     const amount = useMemo(() => {
         const index = accounts.reduce((acc, account) => {
             acc[account.id] = true;

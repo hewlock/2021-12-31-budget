@@ -5,13 +5,13 @@ import Currency from '../Currency.jsx';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { clearFilters } from '../../state/filters';
-import { getTransactions } from '../../state/transactions';
+import { getTransactionsByOrder } from '../../state/transactions';
 import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 
-export default function Nav() {
-    const transactions = useSelector(getTransactions);
+export default function Navigation() {
+    const transactions = useSelector(getTransactionsByOrder);
     const amount = useMemo(() => transactions.reduce((acc, trans) => acc + trans.amount, 0), [transactions]);
     const dispatch = useDispatch();
 

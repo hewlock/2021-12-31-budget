@@ -3,8 +3,8 @@ import CurrencyControl from '../CurrencyControl';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { FormattedMessage } from 'react-intl';
-import { getAccounts } from '../../state/accounts';
-import { getCategories } from '../../state/categories';
+import { getAccountsByOrder } from '../../state/accounts';
+import { getCategoriesByOrder } from '../../state/categories';
 import { getCurrency } from '../../state/currency';
 import { getGroupsById } from '../../state/groups';
 import { useCallback, useMemo } from 'react';
@@ -31,9 +31,9 @@ export default function TransactionForm({
     onAction,
     onChange,
 }) {
-    const accounts = useSelector(getAccounts);
+    const accounts = useSelector(getAccountsByOrder);
     const groups = useSelector(getGroupsById);
-    const categories = useSelector(getCategories);
+    const categories = useSelector(getCategoriesByOrder);
     const currency = useSelector(getCurrency);
 
     const categoryOptions = useMemo(() => {

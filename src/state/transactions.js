@@ -1,13 +1,10 @@
+import action from '../util/action';
 import findWhere from '../util/findWhere';
-import normalize, { add, edit, remove, removeWhere } from '../util/reducer.js';
+import localeComparator from '../util/localeComparator'
+import reducer from '../util/reducer';
+import select from '../util/select';
 
 // Constants
-
-const INITIAL_STATE = {
-    byId: {},
-    byOrder: [],
-};
-
 export const NEW_TRANSACTION = {
     accountId: '',
     amount: 0,
@@ -16,82 +13,24 @@ export const NEW_TRANSACTION = {
     id: null,
 }
 
-const INDICES = {
-    byAccountId: 'accountId'
-}
-
-function comparator(a, b) {
-    return a.date.localeCompare(b.date);
-}
-
-// Actions
-
-const ADD = 'transactions/ADD';
-const EDIT = 'transactions/EDIT';
-const REMOVE = 'accounts/REMOVE';
-const REMOVE_WHERE = 'accounts/REMOVE_WHERE';
+const STORE = 'transactions'
 
 // Action Creators
-
-export function addTransaction(transaction) {
-    return {
-        type: ADD,
-        payload: transaction,
-    }
-}
-
-export function editTransaction(transaction) {
-    return {
-        type: EDIT,
-        payload: transaction,
-    }
-}
-
-export function removeTransaction(transaction) {
-    return {
-        type: REMOVE,
-        payload: transaction,
-    }
-}
-
-export function removeTransactionWhere(criteria) {
-    return {
-        type: REMOVE_WHERE,
-        payload: criteria,
-    }
-}
+const storeAction = action(STORE);
+export const addTransaction = storeAction('ADD');
+export const editTransaction = storeAction('EDIT');
+export const removeTransaction = storeAction('REMOVE');
+export const removeTransactionWhere = storeAction('REMOVE_WHERE');
 
 // Selectors
-
-export function getTransactions(state) {
-    return state.transactions.byOrder;
-}
-
-export function getTransactionById(state, id) {
-    return state.transactions.byId[id];
-}
-
-export function getTransactionsByAccountId(state, accountId) {
-    return state.transactions.byAccountId[accountId];
-}
+const storeSelect = select(STORE);
+export const getTransactionsByOrder = storeSelect('byOrder', [], null);
+export const getTransactionById = storeSelect('byId', {}, null);
+export const getTransactionsByAccountId = storeSelect('byAccountId', {}, []);
 
 export function findTransactions(state, criteria) {
-    return findWhere(state.transactions.byOrder, criteria);
+    return findWhere(getTransactionsByOrder(state), criteria);
 }
 
 // Reducer
-
-export default function reducer(state = INITIAL_STATE, action) {
-    switch (action.type) {
-    case ADD:
-        return normalize(add(state.byId, action.payload), comparator, INDICES);
-    case EDIT:
-        return normalize(edit(state.byId, action.payload), comparator, INDICES);
-    case REMOVE:
-        return normalize(remove(state.byId, action.payload), comparator, INDICES);
-    case REMOVE_WHERE:
-        return normalize(removeWhere(state.byId, action.payload), comparator, INDICES);
-    default:
-        return state;
-    }
-}
+export default reducer(STORE, localeComparator('date'), { byAccountId: 'accountId' });

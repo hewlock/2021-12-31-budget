@@ -1,81 +1,28 @@
-import normalize, { add, edit, remove } from '../util/reducer.js'
+import action from '../util/action';
+import localeComparator from '../util/localeComparator'
+import reducer from '../util/reducer';
+import select from '../util/select';
 
 // Constants
-
-const INITIAL_STATE = {
-    byBudget: {},
-    byId: {},
-    byOrder: [],
-};
-
 export const NEW_ACCOUNT = {
     budget: true,
     id: null,
     name: '',
 }
 
-const INDICES = {
-    byBudget: 'budget'
-}
-
-function comparator(a, b) {
-    return a.name.localeCompare(b.name);
-}
-
-// Actions
-
-const ADD = 'accounts/ADD';
-const EDIT = 'accounts/EDIT';
-const REMOVE = 'accounts/REMOVE';
+const STORE = 'accounts';
 
 // Action Creators
-
-export function addAccount(account) {
-    return {
-        type: ADD,
-        payload: account,
-    }
-}
-
-export function editAccount(account) {
-    return {
-        type: EDIT,
-        payload: account,
-    }
-}
-
-export function removeAccount(account) {
-    return {
-        type: REMOVE,
-        payload: account,
-    }
-}
+const storeAction = action(STORE);
+export const addAccount = storeAction('ADD');
+export const editAccount = storeAction('EDIT');
+export const removeAccount = storeAction('REMOVE');
 
 // Selectors
-
-export function getAccounts(state) {
-    return state.accounts.byOrder;
-}
-
-export function getAccountById(state, id) {
-    return state.accounts.byId[id];
-}
-
-export function getAccountsByBudget(state, budget) {
-    return state.accounts.byBudget[budget] || [];
-}
+const storeSelect = select(STORE);
+export const getAccountsByOrder = storeSelect('byOrder', [], null);
+export const getAccountsById = storeSelect('byId', {}, null);
+export const getAccountsByBudget = storeSelect('byBudget',{}, []);
 
 // Reducer
-
-export default function reducer(state = INITIAL_STATE, action) {
-    switch (action.type) {
-    case ADD:
-        return normalize(add(state.byId, action.payload), comparator, INDICES);
-    case EDIT:
-        return normalize(edit(state.byId, action.payload), comparator, INDICES);
-    case REMOVE:
-        return normalize(remove(state.byId, action.payload), comparator, INDICES);
-    default:
-        return state;
-    }
-}
+export default reducer(STORE, localeComparator('name'), { byBudget: 'budget' });
