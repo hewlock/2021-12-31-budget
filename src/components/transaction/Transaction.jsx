@@ -5,6 +5,7 @@ import uuid from '../../util/uuid';
 import { editTransaction, removeTransaction } from '../../state/transactions';
 import { getAccountById } from '../../state/accounts';
 import { getCategoryById } from '../../state/categories';
+import { getGroupById } from '../../state/groups';
 import { getTransactionById } from '../../state/transactions';
 import { useCallback, useState} from 'react';
 import { useDispatch } from 'react-redux';
@@ -39,6 +40,7 @@ export default function Transaction({ transactionId }) {
     const transaction = useSelector(state => getTransactionById(state, transactionId));
     const account = useSelector(state => getAccountById(state, transaction.accountId));
     const category = useSelector(state => getCategoryById(state, transaction.categoryId));
+    const group = useSelector(state => getGroupById(state, category.groupId));
     const [form, setForm] = useState(() => newForm(transaction));
     const [edit, setEdit] = useState(false);
 
@@ -78,7 +80,7 @@ export default function Transaction({ transactionId }) {
             <td>{transaction.date}</td>
             <td>{account.name}</td>
             <td>
-                {category.group}: {category.name}
+                {group.name} : {category.name}
             </td>
             <td className="text-end">
                 <Currency value={transaction.amount} />

@@ -4,6 +4,7 @@ import accounts from './accounts';
 import categories from './categories';
 import currency from './currency';
 import filters from './filters';
+import groups from './groups';
 import transactions from './transactions';
 
 const appReducer = combineReducers({
@@ -11,6 +12,7 @@ const appReducer = combineReducers({
     categories,
     currency,
     filters,
+    groups,
     transactions,
 });
 

@@ -6,7 +6,8 @@ import { FormattedMessage } from 'react-intl';
 import { getAccounts } from '../../state/accounts';
 import { getCategories } from '../../state/categories';
 import { getCurrency } from '../../state/currency';
-import { useCallback } from 'react';
+import { getGroupsById } from '../../state/groups';
+import { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 
@@ -31,8 +32,18 @@ export default function TransactionForm({
     onChange,
 }) {
     const accounts = useSelector(getAccounts);
+    const groups = useSelector(getGroupsById);
     const categories = useSelector(getCategories);
     const currency = useSelector(getCurrency);
+
+    const categoryOptions = useMemo(() => {
+        const options = categories.map(category => ({
+            id: category.id,
+            value: `${groups[category.groupId].name} : ${category.name}`
+        }));
+        options.sort((a, b) => a.value.localeCompare(b.value));
+        return options;
+    }, [categories, groups]);
 
     const handleBlur = useCallback((e) => {
         onChange(validate(form));
@@ -108,9 +119,9 @@ export default function TransactionForm({
                         value={form.categoryId}
                     >
                         <option key="empty" />
-                        {categories.map(category => (
-                            <option key={category.id} value={category.id}>
-                                {category.group}: {category.name}
+                        {categoryOptions.map(option => (
+                            <option key={option.id} value={option.id}>
+                                {option.value}
                             </option>
                         ))}
                     </Form.Select>

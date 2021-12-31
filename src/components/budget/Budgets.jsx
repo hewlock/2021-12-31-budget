@@ -15,7 +15,7 @@ export default function Budget() {
                     {categories.map((category) => (
                         <tr key={category.id}>
                             <td>{category.id}</td>
-                            <td>{category.group}</td>
+                            <td>{category.groupId}</td>
                             <td>{category.name}</td>
                             <td>{category.type}</td>
                         </tr>

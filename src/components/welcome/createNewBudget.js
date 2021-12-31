@@ -1,6 +1,7 @@
 import uuid from '../../util/uuid';
 import { addAccount } from '../../state/accounts';
 import { addCategory } from '../../state/categories';
+import { addGroup } from '../../state/groups';
 import { addTransaction } from '../../state/transactions';
 import { today } from '../../util/date';
 
@@ -29,12 +30,21 @@ export default function createNewBudget(dispatch, intl) {
         return id;
     }
 
-    function category(groupKey, nameKey, type = 'user') {
+    function group(nameKey) {
         const id = uuid();
-        const group = intl.formatMessage({ id: groupKey });
+        const name = intl.formatMessage({ id: nameKey });
+        dispatch(addGroup({
+            id,
+            name,
+        }));
+        return id;
+    }
+
+    function category(groupId, nameKey, type = 'user') {
+        const id = uuid();
         const name = intl.formatMessage({ id: nameKey });
         dispatch(addCategory({
-            group,
+            groupId,
             id,
             name,
             type,
@@ -42,16 +52,22 @@ export default function createNewBudget(dispatch, intl) {
         return id;
     }
 
-    const systemId = category('new.group.system', 'new.category.initial-balance', 'initial-balance');
+    let groupId = group('new.group.system');
+    const systemId = category(groupId, 'new.category.initial-balance', 'initial-balance');
 
-    category('new.group.food', 'new.category.eating-out');
-    category('new.group.food', 'new.category.groceries');
-    category('new.group.home', 'new.category.home-insurance');
-    category('new.group.home', 'new.category.mortgage-rent');
-    category('new.group.home', 'new.category.utilities');
-    category('new.group.transporation', 'new.category.car-insurance');
-    category('new.group.transporation', 'new.category.car-payment');
-    category('new.group.transporation', 'new.category.fuel');
+    groupId = group('new.group.food');
+    category(groupId, 'new.category.eating-out');
+    category(groupId, 'new.category.groceries');
+
+    groupId = group('new.group.home');
+    category(groupId, 'new.category.home-insurance');
+    category(groupId, 'new.category.mortgage-rent');
+    category(groupId, 'new.category.utilities');
+
+    groupId = group('new.group.transporation');
+    category(groupId, 'new.category.car-insurance');
+    category(groupId, 'new.category.car-payment');
+    category(groupId, 'new.category.fuel');
 
     account('new.account.auto-loan', false, systemId);
     account('new.account.brokerage', false, systemId);
